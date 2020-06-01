@@ -1,21 +1,20 @@
 const router = require("express").Router();
-const Workout = require("../models/workout-model.js");
+const db = require("../models");
 
-// HOME
+// HOME PAGE
 router.get("/", (req, res) => {
     res.render("index");
 })
 
-// EXERCISE
+// EXERCISE PAGE
 router.get("/exercise", (req, res) => {
     res.render("exercise");
 })
 
-// STATS
+// STATS PAGE
 router.get("/stats", (req, res) => {
     res.render("stats");
 })
-
 
 
 module.exports = router;

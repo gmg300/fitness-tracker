@@ -2,16 +2,18 @@
 // =============================================================
 const express = require("express");
 const exphbs = require("express-handlebars");
+const logger = require("morgan");
 const mongoose = require("mongoose");
 const chalk = require("chalk");
-
 
 // Setup Express
 // =============================================================
 const PORT = process.env.PORT || 3000;
 
-// Express - data parsing
 const app = express();
+// app.use(logger("dev"));
+
+// Express - data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -22,17 +24,15 @@ app.use(express.static("public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Database - MongoDB
+// Database Connection
 // =============================================================
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
-  useNewUrlParser: true,
-  useFindAndModify: false
-});
+const db = require("./models");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true, useFindAndModify: false });
 
 // Routes
 // =============================================================
-app.use(require("./controllers/html-routes.js"));
-app.use(require("./controllers/api-routes.js"));
+app.use(require("./controllers/html.js"));
+app.use(require("./controllers/api.js"));
 
 // Start Express Server
 // =============================================================
