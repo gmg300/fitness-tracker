@@ -1,10 +1,12 @@
 const router = require("express").Router();
 const db = require("../models");
+const chalk = require("chalk");
 
 // CREATE WORKOUT
 router.post("/api/workouts", ({body}, res) => {
   db.Workout.create(body)
     .then(workout => {
+      console.log(chalk.green("Workout create!"));
       res.json(workout);
     })
     .catch(err => {
@@ -27,15 +29,15 @@ router.get("/api/workouts", (req, res) => {
     });
 });
 
-// router.get("/api/workouts/range", (req, res) => {
-//   db.Workout.find()
-//     .then(workouts => {
-//       res.json(workouts);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
+router.get("/api/workouts/range", (req, res) => {
+  db.Workout.find()
+    .then(workouts => {
+      res.json(workouts);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
 
 // ADD EXERCISE
 // https://coursework.vschool.io/mongoose-crud/
@@ -43,6 +45,7 @@ router.get("/api/workouts", (req, res) => {
 router.put("/api/workouts/:id", ({body, params}, res) => {
   db.Workout.findByIdAndUpdate(params.id, {$push: {exercises: body}}, {new: true})
     .then(workout => {
+      console.log(chalk.green("Exercise added!"));
       res.json(workout);
     })
     .catch(err => {

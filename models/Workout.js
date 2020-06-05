@@ -12,12 +12,13 @@ const WorkoutSchema = new Schema({
     {
       type: {
         type: String,
-        required: "Enter an exercise type",
+        enum: ['cardio', 'resistance'],
+        required: [true, "Enter an exercise type"]
       },
       name: {
         type: String,
         trim: true,
-        required: "Enter a name for the exercise",
+        required: [true, "Enter a name for the exercise"]
       },
       duration: {
         type: Number,
@@ -25,15 +26,19 @@ const WorkoutSchema = new Schema({
       },
       distance: {
         type: Number,
+        required: function() { return this.type === 'cardio'; }
       },
       weight: {
         type: Number,
+        required: function() { return this.type === 'resistance'; }
       },
       reps: {
         type: Number,
+        required: function() { return this.type === 'resistance'; }
       },
       sets: {
         type: Number,
+        required: function() { return this.type === 'resistance'; }
       },
     },
   ],
