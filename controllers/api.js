@@ -12,26 +12,30 @@ router.post("/api/workouts", ({body}, res) => {
     });
 });
 
-// GET ALL WORKOUTS
+// FIND ALL WORKOUTS
 router.get("/api/workouts", (req, res) => {
   db.Workout.find()
     .then(workouts => {
-      // console.log(workouts)
+      // calculate total duration for each workout
+      workouts.forEach(workout => {
+        workout.getTotalDuration();
+      })
       res.json(workouts);
     })
     .catch(err => {
       res.json(err);
     });
 });
-router.get("/api/workouts/range", (req, res) => {
-  db.Workout.find()
-    .then(workouts => {
-      res.json(workouts);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
+
+// router.get("/api/workouts/range", (req, res) => {
+//   db.Workout.find()
+//     .then(workouts => {
+//       res.json(workouts);
+//     })
+//     .catch(err => {
+//       res.json(err);
+//     });
+// });
 
 // ADD EXERCISE
 // https://coursework.vschool.io/mongoose-crud/
@@ -39,7 +43,6 @@ router.get("/api/workouts/range", (req, res) => {
 router.put("/api/workouts/:id", ({body, params}, res) => {
   db.Workout.findByIdAndUpdate(params.id, {$push: {exercises: body}}, {new: true})
     .then(workout => {
-      console.log(workout);
       res.json(workout);
     })
     .catch(err => {
@@ -47,6 +50,4 @@ router.put("/api/workouts/:id", ({body, params}, res) => {
     });
 });
 
-
-  
-  module.exports = router;
+module.exports = router;
