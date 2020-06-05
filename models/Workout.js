@@ -7,6 +7,7 @@ const WorkoutSchema = new Schema({
     required: true,
     default: Date.now
   },
+  // https://masteringjs.io/tutorials/mongoose/array#document-arrays
   exercises: [
     {
       type: {

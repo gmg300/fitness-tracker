@@ -16,6 +16,7 @@ router.post("/api/workouts", ({body}, res) => {
 router.get("/api/workouts", (req, res) => {
   db.Workout.find()
     .then(workouts => {
+      // console.log(workouts)
       res.json(workouts);
     })
     .catch(err => {
@@ -34,9 +35,11 @@ router.get("/api/workouts/range", (req, res) => {
 
 // ADD EXERCISE
 // https://coursework.vschool.io/mongoose-crud/
+// https://stackoverflow.com/questions/33049707/push-items-into-mongo-array-via-mongoose
 router.put("/api/workouts/:id", ({body, params}, res) => {
-  db.Workout.findByIdAndUpdate(params.id, body, {new: true})
+  db.Workout.findByIdAndUpdate(params.id, {$push: {exercises: body}}, {new: true})
     .then(workout => {
+      console.log(workout);
       res.json(workout);
     })
     .catch(err => {
