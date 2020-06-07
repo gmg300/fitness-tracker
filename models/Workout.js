@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const WorkoutSchema = new Schema({
   day: {
     type: Date,
-    required: true,
     default: Date.now
   },
   // https://masteringjs.io/tutorials/mongoose/array#document-arrays
@@ -26,18 +25,22 @@ const WorkoutSchema = new Schema({
       },
       distance: {
         type: Number,
+        default: 0,
         required: function() { return this.type === 'cardio'; }
       },
       weight: {
         type: Number,
+        default: 0,
         required: function() { return this.type === 'resistance'; }
       },
       reps: {
         type: Number,
+        default: 0,
         required: function() { return this.type === 'resistance'; }
       },
       sets: {
         type: Number,
+        default: 0,
         required: function() { return this.type === 'resistance'; }
       },
     },

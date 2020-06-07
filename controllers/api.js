@@ -6,7 +6,7 @@ const chalk = require("chalk");
 router.post("/api/workouts", ({body}, res) => {
   db.Workout.create(body)
     .then(workout => {
-      console.log(chalk.green("Workout create!"));
+      console.log(chalk.green("Workout created!"));
       res.json(workout);
     })
     .catch(err => {
@@ -29,9 +29,11 @@ router.get("/api/workouts", (req, res) => {
     });
 });
 
+// https://dba.stackexchange.com/questions/97237/query-mongodb-collection-and-find-rows-from-7-days-ago
 router.get("/api/workouts/range", (req, res) => {
   db.Workout.find()
     .then(workouts => {
+      console.log(workouts)
       res.json(workouts);
     })
     .catch(err => {
