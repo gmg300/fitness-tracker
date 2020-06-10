@@ -21,27 +21,23 @@ const WorkoutSchema = new Schema({
       },
       duration: {
         type: Number,
-        required: "Enter a duration (minutes)",
+        required: [true, "Enter a duration (minutes)"]
       },
       distance: {
         type: Number,
-        default: 0,
-        required: function() { return this.type === 'cardio'; }
+        default: 0
       },
       weight: {
         type: Number,
-        default: 0,
-        required: function() { return this.type === 'resistance'; }
+        default: 0
       },
       reps: {
         type: Number,
-        default: 0,
-        required: function() { return this.type === 'resistance'; }
+        default: 0
       },
       sets: {
         type: Number,
-        default: 0,
-        required: function() { return this.type === 'resistance'; }
+        default: 0
       },
     },
   ],

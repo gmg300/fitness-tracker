@@ -31,10 +31,9 @@ router.get("/api/workouts", (req, res) => {
 
 // https://dba.stackexchange.com/questions/97237/query-mongodb-collection-and-find-rows-from-7-days-ago
 router.get("/api/workouts/range", (req, res) => {
-  let less = new Date(Date.now())
-  let greater = new Date(Date.now() - 7*24*60*60*1000)
-  db.Workout.find({day: {$lte: less, $gte: greater}}).limit(7)
+  db.Workout.find().limit(7).sort({$natural : -1})
     .then(workouts => {
+      workouts.reverse();
       res.json(workouts);
     })
     .catch(err => {
